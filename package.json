@@ -1,15 +1,29 @@
 {
   "name": "discordbot",
   "version": "1.0.0",
-  "description": "discordbot with discord.js",
-  "main": "main.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeratBilgic/Discord-Bot.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeratBilgic/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/BeratBilgic/Discord-Bot#readme",
   "dependencies": {
-    "discord.js": "^14.0.3"
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/rest": "^1.0.1",
+    "@discordjs/voice": "^0.11.0",
+    "discord-player": "^5.2.2",
+    "discord.js": "^14.1.2-dev.1659139853-d070de6.0",
+    "dotenv": "^16.0.1",
+    "yt-search": "^2.10.3"
   }
 }
