@@ -11,15 +11,22 @@ module.exports.registerPlayerEvents = (player) => {
 
     player.on("trackStart", (queue, track) => {
         let embedModal = new EmbedBuilder()
+            .setTitle(track.author)
             .setDescription(`**[${track.title}](${track.url})**`)
             .setThumbnail(track.thumbnail)
             .addFields({ name: 'Duration', value: `${track.duration}`, inline: true })
-            .addFields({ name: 'Requested By', value: `${track.requestedBy}`, inline: true })
+            .addFields({ name: 'Requested By', value: `${track.requestedBy.username}`, inline: true })
         queue.metadata.send({ embeds: [embedModal] });
     });
 
     player.on("trackAdd", (queue, track) => {
         queue.metadata.send(`🎶 | Track **${track.title}** queued!`);
+    });
+
+    player.on("tracksAdd", (queue, tracks) => {
+        tracks.forEach(track => {
+            queue.metadata.send(`🎶 | Track **${track.title}** queued!`);
+        });
     });
 
     player.on("botDisconnect", (queue) => {
