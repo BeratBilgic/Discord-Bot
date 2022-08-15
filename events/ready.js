@@ -1,6 +1,4 @@
-const { token } = require('../config.json');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord.js');
+const { registerCommands } = require('../utils/registerAppCommands');
 
 module.exports = {
 	name: "ready",
@@ -13,15 +11,7 @@ module.exports = {
             const commands = (await guild.commands.fetch().catch(() => { })) || client.commands.size
 
             if (commands.size <= client.commands.size) {
-                const rest = new REST({ version: '10' }).setToken(token);
-                const body = client.commands.map(command => command.data.toJSON());
-
-                try {
-                    await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: body })
-	                .then(() => console.log('Successfully registered application commands.'));
-                } catch (error) {
-                    console.log(error);
-                }
+                registerCommands(client, guild);
             }
         });
 	},

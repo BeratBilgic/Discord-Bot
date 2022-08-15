@@ -1,7 +1,7 @@
 const { token } = require('./config.json');
 const fs = require("fs");
 const { Player } = require("discord-player");
-const { registerPlayerEvents } = require('./events/playerEvents');
+const { registerPlayerEvents } = require('./utils/playerEvents');
 
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const client = new Client({ 
@@ -23,12 +23,15 @@ client.player = new Player(client, {
 
 registerPlayerEvents(client.player);
 
-const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-    console.log(`${file} loaded`);
-	client.commands.set(command.data.name, command);
-}
+fs.readdirSync('./commands/').forEach(folder => {
+    const commands = fs.readdirSync(`./commands/${folder}`).filter(files => files.endsWith('.js'));
+
+    for (const file of commands) {
+        const command = require(`./commands/${folder}/${file}`);
+		console.log(`-> Loaded command ${file}`);
+        client.commands.set(command.data.name, command);
+    };
+});
 
 const eventFiles = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of eventFiles) {

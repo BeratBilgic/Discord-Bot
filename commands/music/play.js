@@ -4,8 +4,8 @@ const { QueryType } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('play')
-        .setDescription('Give me some hints about this music')
-        .addStringOption(option => option.setName("song").setDescription("Hint of music.").setRequired(true)),
+        .setDescription('Play a song')
+        .addStringOption(option => option.setName("song").setDescription("The song you want to play").setRequired(true)),
     async execute(interaction) {
         await interaction.deferReply();
 
@@ -41,7 +41,7 @@ module.exports = {
             return await interaction.editReply("Could not join your voice channel!");
         }
         
-        await interaction.editReply({ content: `⏱ | Loading your ${result.playlist ? 'playlist' : 'track'}...` });
+        await interaction.editReply({ content: `⏱ | Loading your ${result.playlist ? 'playlist' : 'song'}...` });
 
         if (!queue.playing) await queue.play()
     }
