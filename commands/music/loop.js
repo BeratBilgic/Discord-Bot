@@ -10,6 +10,10 @@ module.exports = {
 
         if (!queue || !queue.playing) return interaction.reply({ content: '❌ | No music is being played' });
 
+        if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+            return interaction.reply({ content: '❌ | You are not in the same voice channel as the bot' });
+        }
+
         if (queue.repeatMode == QueueRepeatMode.TRACK) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
             return interaction.reply({ content: success ? `✅ | Loop mode disabled` : '❌ | Could not update loop mode' });

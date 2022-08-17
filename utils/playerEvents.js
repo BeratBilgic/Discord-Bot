@@ -16,6 +16,8 @@ module.exports.registerPlayerEvents = (player) => {
             .setThumbnail(track.thumbnail)
             .addFields({ name: 'Duration', value: `${track.duration}`, inline: true })
             .addFields({ name: 'Requested By', value: `${track.requestedBy.username}`, inline: true })
+            .setTimestamp()
+            .setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
         queue.metadata.send({ embeds: [embedModal] });
     });
 

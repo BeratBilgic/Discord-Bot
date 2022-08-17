@@ -13,7 +13,7 @@ module.exports = {
 			if (err) console.error(err);
 
 			await interaction.reply({
-				content: "An error occurred while executing that command.",
+				content: "🛠 | An error occurred while executing that command.",
 				ephemeral: true,
 			});
 		}

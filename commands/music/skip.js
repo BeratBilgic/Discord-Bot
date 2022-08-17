@@ -10,13 +10,17 @@ module.exports = {
 
         if (!queue || !queue.playing) return interaction.reply({ content: '❌ | No music is being played' });
 
+        if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+            return interaction.reply({ content: '❌ | You are not in the same voice channel as the bot' });
+        }
+
         if (queue.repeatMode == QueueRepeatMode.TRACK) {
             queue.setRepeatMode(QueueRepeatMode.OFF);
         }
 
-        const currentSong = queue.current
+        const currentSong = queue.current;
 
-        const success = queue.skip();
+        const success = await queue.skip();
         interaction.reply({ content: success ? `✅ | Skipped **${currentSong}**!` : '❌ | Something went wrong!'});
     }
 }

@@ -9,6 +9,10 @@ module.exports = {
 
         if (!queue || !queue.playing) return interaction.reply({ content: '❌ | No music is being played' });
 
+        if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+            return interaction.reply({ content: '❌ | You are not in the same voice channel as the bot' });
+        }
+
         if (!queue.previousTracks[1]) return interaction.reply({ content: '❌ | There is no previous music available' });
         
         await queue.back();

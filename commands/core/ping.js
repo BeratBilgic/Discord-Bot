@@ -9,7 +9,8 @@ module.exports = {
 		//await interaction.reply("My ping is \`" + interaction.client.ws.ping + " ms\`");
 		let embedModal = new EmbedBuilder()
             .setTitle("My ping is \`" + interaction.client.ws.ping + " ms\`")
-			.setFooter({ text: `${new Date().toISOString().replace(/T/, '       ').replace(/\..+/, '') }` })
+			.setTimestamp()
+			.setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
 
         await interaction.reply({ embeds: [embedModal] })
 	},

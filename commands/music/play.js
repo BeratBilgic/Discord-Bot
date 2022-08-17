@@ -9,12 +9,16 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
 
-        if (!interaction.member.permissions.has(["VIEW_CHANNEL"])) {
-            return interaction.editReply({ content: "Not have enough permission.", ephemeral: true });
+        if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj')){
+            return interaction.editReply({ content: "❌ | You must have the DJ role"});
         }
 
         if (!interaction.member.voice.channel) {
-            return interaction.editReply("You must be in a voice channel.")
+            return interaction.editReply("❌ | You must be in a voice channel.")
+        }
+
+        if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+            return interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
         const queue = await interaction.client.player.createQueue(interaction.guild, {
@@ -28,7 +32,7 @@ module.exports = {
         })
 
         if (result.tracks.length === 0 || !result) {
-            return interaction.editReply("No results")
+            return interaction.editReply("❌ | No results")
         }
 
         result.playlist ? queue.addTracks(result.tracks) : queue.addTrack(result.tracks[0]);
@@ -36,9 +40,10 @@ module.exports = {
         if (!queue.connection) await queue.connect(interaction.member.voice.channel)
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
-        } catch {
-            queue.destroy();
-            return await interaction.editReply("Could not join your voice channel!");
+        } catch (err){
+            console.error(err);
+            await queue.destroy();
+            return interaction.editReply("❌ | Could not join your voice channel!");
         }
         
         await interaction.editReply({ content: `⏱ | Loading your ${result.playlist ? 'playlist' : 'song'}...` });

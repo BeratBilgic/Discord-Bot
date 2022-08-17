@@ -9,7 +9,11 @@ module.exports = {
 
         if (!queue || !queue.playing) return interaction.reply({ content: '❌ | No music is being played' });
 
+        if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+            return interaction.reply({ content: '❌ | You are not in the same voice channel as the bot' });
+        }
+
         const paused = queue.setPaused(false);
-        return interaction.reply({ content: paused ? '▶ | Resumed!' : '❌ | Something went wrong!' });
+        return interaction.reply({ content: paused ? '▶ | Resumed' : '❌ | Something went wrong!' });
     }
 }
