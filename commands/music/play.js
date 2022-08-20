@@ -25,19 +25,16 @@ module.exports = {
             metadata: interaction.channel
         });
 
-        let url = interaction.options.getString("song")
-        const result = await interaction.client.player.search(url, {
+        let song = interaction.options.getString("song")
+        const result = await interaction.client.player.search(song, {
             requestedBy: interaction.user,
             searchEngine: QueryType.AUTO
         })
 
-        if (result.tracks.length === 0 || !result) {
+        if (!result || !result.tracks.length) {
             return interaction.editReply("❌ | No results")
         }
 
-        result.playlist ? queue.addTracks(result.tracks) : queue.addTrack(result.tracks[0]);
-
-        if (!queue.connection) await queue.connect(interaction.member.voice.channel)
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
         } catch (err){
@@ -45,9 +42,11 @@ module.exports = {
             await queue.destroy();
             return interaction.editReply("❌ | Could not join your voice channel!");
         }
+
+        result.playlist ? queue.addTracks(result.tracks) : queue.addTrack(result.tracks[0]);
         
         await interaction.editReply({ content: `⏱ | Loading your ${result.playlist ? 'playlist' : 'song'}...` });
 
-        if (!queue.playing) await queue.play()
+        if (!queue.playing) await queue.play();
     }
 }

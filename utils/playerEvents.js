@@ -42,5 +42,4 @@ module.exports.registerPlayerEvents = (player) => {
     player.on("queueEnd", (queue) => {
         queue.metadata.send("✅ | Queue finished!");
     });
-
 };
