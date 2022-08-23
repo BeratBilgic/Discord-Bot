@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { QueryType } = require("discord-player");
+const playdl = require("play-dl");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,7 +10,7 @@ module.exports = {
     async execute(interaction) {
         await interaction.deferReply();
 
-        if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj')){
+        if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
             return interaction.editReply({ content: "❌ | You must have the DJ role"});
         }
 
@@ -21,19 +22,26 @@ module.exports = {
             return interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        const queue = await interaction.client.player.createQueue(interaction.guild, {
-            metadata: interaction.channel
-        });
-
         let song = interaction.options.getString("song")
         const result = await interaction.client.player.search(song, {
             requestedBy: interaction.user,
             searchEngine: QueryType.AUTO
-        })
+        });
 
         if (!result || !result.tracks.length) {
             return interaction.editReply("❌ | No results")
         }
+
+        const queue = await interaction.client.player.createQueue(interaction.guild, {
+            metadata: interaction.channel,
+            guild: interaction.guildId,
+
+            async onBeforeCreateStream(track, source, _queue) {
+                if (track.url.includes("youtube.com")) {
+                    return (await playdl.stream(track.url, { discordPlayerCompatibility : true })).stream;
+                }
+            }
+        });
 
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
