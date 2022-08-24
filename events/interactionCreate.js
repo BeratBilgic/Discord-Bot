@@ -12,7 +12,7 @@ module.exports = {
 		} catch (err) {
 			if (err) console.error(err);
 
-			await interaction.reply({
+			await interaction.followUp({
 				content: "🛠 | An error occurred while executing that command.",
 				ephemeral: true,
 			});
