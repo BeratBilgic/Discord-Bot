@@ -19,6 +19,6 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: iconLink});
 
-        interaction.reply({ embeds: [embedModal] })
+        await interaction.reply({ embeds: [embedModal] })
     }
 }

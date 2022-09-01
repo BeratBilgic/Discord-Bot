@@ -33,9 +33,11 @@ module.exports.registerPlayerEvents = (player) => {
         });
     });
 
+    /*
     player.on("botDisconnect", (queue) => {
         queue.metadata.send("❌ | I was manually disconnected from the voice channel, clearing queue!").catch(()=>{ });
     });
+    */
 
     player.on("channelEmpty", (queue) => {
         queue.metadata.send("❌ | Nobody is in the voice channel, leaving...").catch(()=>{ });
@@ -43,5 +45,10 @@ module.exports.registerPlayerEvents = (player) => {
 
     player.on("queueEnd", (queue) => {
         queue.metadata.send("✅ | Queue finished!").catch(()=>{ });
+        setTimeout(() => {
+            if (queue.connection) {
+                queue.connection.disconnect();
+            }
+          }, 60000)
     });
 };

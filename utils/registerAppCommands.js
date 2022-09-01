@@ -10,10 +10,10 @@ module.exports.registerCommands = async (client, guild) => {
     const body = client.commands.map(command => command.data.toJSON());
 
     try {
-        await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: body })
-        .then(() => console.log('Successfully registered application commands.'));
-    } catch (error) {
-        console.log(error);
+        const data = await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), { body: body });
+        console.log(`Successfully reloaded ${data.length} application (/) commands.`)
+    } catch (err) {
+        console.log(err);
 
         if (err.code == 50001) {	
             let embedModal = new EmbedBuilder()
