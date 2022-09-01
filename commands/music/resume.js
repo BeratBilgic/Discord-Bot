@@ -13,6 +13,10 @@ module.exports = {
             return await interaction.reply({ content: "❌ | You must have the DJ role"});
         }
 
+        if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
+            return interaction.reply({ content: "❌ | You must have the DJ role"});
+        }
+
         if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
             return await interaction.reply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
