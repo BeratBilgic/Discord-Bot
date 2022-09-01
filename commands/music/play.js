@@ -11,15 +11,15 @@ module.exports = {
         await interaction.deferReply();
 
         if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
-            return interaction.editReply({ content: "❌ | You must have the DJ role"});
+            return await interaction.editReply({ content: "❌ | You must have the DJ role"});
         }
 
         if (!interaction.member.voice.channel) {
-            return interaction.editReply("❌ | You must be in a voice channel.")
+            return await interaction.editReply("❌ | You must be in a voice channel.")
         }
 
         if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
-            return interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
+            return await interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
         let song = interaction.options.getString("song")
@@ -29,16 +29,23 @@ module.exports = {
         });
 
         if (!result || !result.tracks.length) {
-            return interaction.editReply("❌ | No results")
+            return await interaction.editReply("❌ | No results")
         }
 
         const queue = await interaction.client.player.createQueue(interaction.guild, {
             metadata: interaction.channel,
             guild: interaction.guildId,
 
+            //leaveOnEmpty: false,
+            leaveOnEmptyCooldown : 60000,
+            leaveOnEnd: false,
+            leaveOnStop: true,
+
             async onBeforeCreateStream(track, source, _queue) {
                 if (track.url.includes("youtube.com")) {
                     return (await playdl.stream(track.url, { discordPlayerCompatibility : true })).stream;
+                }else if (track.url.includes("spotify.com")){
+                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit: 1, source: { youtube: "video" } }).then(x => x[0].url), { discordPlayerCompatibility: true })).stream;
                 }
             }
         });
@@ -48,7 +55,7 @@ module.exports = {
         } catch (err){
             console.error(err);
             await queue.destroy();
-            return interaction.editReply("❌ | Could not join your voice channel!");
+            return await interaction.editReply("❌ | Could not join your voice channel!");
         }
 
         result.playlist ? queue.addTracks(result.tracks) : queue.addTrack(result.tracks[0]);

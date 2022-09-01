@@ -12,10 +12,17 @@ module.exports = {
 		} catch (err) {
 			if (err) console.error(err);
 
-			await interaction.followUp({
-				content: "🛠 | An error occurred while executing that command.",
-				ephemeral: true,
-			});
+			if (command.data.name == 'play') {
+				await interaction.followUp({
+					content: "🛠 | An error occurred while executing that command.",
+					ephemeral: true,
+				});
+			}else{
+				await interaction.reply({
+					content: "🛠 | An error occurred while executing that command.",
+					ephemeral: true,
+				});
+			}
 		}
 	}
 }

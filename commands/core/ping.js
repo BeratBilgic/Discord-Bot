@@ -7,11 +7,18 @@ module.exports = {
 		.setDescription('Get ping of the bot'),
 	async execute(interaction) {
 		//await interaction.reply("My ping is \`" + interaction.client.ws.ping + " ms\`");
-		let embedModal = new EmbedBuilder()
-            .setTitle("My ping is \`" + interaction.client.ws.ping + " ms\`")
-			.setTimestamp()
-			.setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
 
-        await interaction.reply({ embeds: [embedModal] })
+		try {
+			const mesg = await interaction.reply({ content: "🏓 Pong!", fetchReply: true });
+	  
+			let embedModal = new EmbedBuilder()
+            	.setDescription(`❗️ **Bot Latency** : \`${mesg.createdTimestamp - interaction.createdTimestamp}ms\`\n\n❗️ **Websocket Latency** : \`${interaction.client.ws.ping}ms\`\n`)
+				.setTimestamp()
+				.setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
+			await interaction.editReply({ embeds: [embedModal] });
+		  } catch (err) {
+			await interaction.editReply("❌ | Something Went Wrong");
+			console.error(err);
+		  }
 	},
 };

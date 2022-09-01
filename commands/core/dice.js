@@ -9,6 +9,7 @@ module.exports = {
     async execute(interaction) {
         let number = interaction.options.getInteger("number")
         if (number == null) number = 6;
+        if (number < 2) number = 2;
         
         let randomNumber = 1 + Math.floor(Math.random() * number)
 
@@ -18,7 +19,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
 
-        interaction.reply({ embeds: [embedModal] })
+        await interaction.reply({ embeds: [embedModal] })
         
     }
 }
