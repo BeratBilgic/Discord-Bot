@@ -37,7 +37,7 @@ module.exports = {
             guild: interaction.guildId,
 
             //leaveOnEmpty: false,
-            leaveOnEmptyCooldown : 60000,
+            leaveOnEmptyCooldown : 90000,
             leaveOnEnd: false,
             leaveOnStop: true,
 

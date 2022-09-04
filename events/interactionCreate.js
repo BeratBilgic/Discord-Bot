@@ -10,19 +10,12 @@ module.exports = {
 		try {
 			await command.execute(interaction);
 		} catch (err) {
-			if (err) console.error(err);
+			await interaction.editReply({
+				content: "🛠 | An error occurred while executing that command.",
+				ephemeral: true,
+			});
 
-			if (command.data.name == 'play') {
-				await interaction.followUp({
-					content: "🛠 | An error occurred while executing that command.",
-					ephemeral: true,
-				});
-			}else{
-				await interaction.reply({
-					content: "🛠 | An error occurred while executing that command.",
-					ephemeral: true,
-				});
-			}
+			if (err) console.error(err);
 		}
 	}
 }

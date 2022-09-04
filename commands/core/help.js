@@ -9,6 +9,8 @@ module.exports = {
         .setName("help")
         .setDescription("Show bot commands"),
     async execute(interaction) {
+        await interaction.deferReply();
+
         const commandList = interaction.client.commands.map((command) => '`' + command.data.name + '`').join(', ');
 
         let embedModal = new EmbedBuilder()
@@ -19,6 +21,6 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: iconLink});
 
-        await interaction.reply({ embeds: [embedModal] })
+        await interaction.editReply({ embeds: [embedModal] })
     }
 }

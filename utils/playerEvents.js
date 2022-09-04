@@ -28,9 +28,12 @@ module.exports.registerPlayerEvents = (player) => {
     });
 
     player.on("tracksAdd", (queue, tracks) => {
-        tracks.forEach(track => {
-            queue.metadata.send(`🎶 | Track **${track.title}** queued!`).catch(()=>{ });
-        });
+        let hour = Math.floor(queue.totalTime / 1000 / 60 / 60)
+        let minutes = Math.floor(queue.totalTime / 1000 / 60 % 60)
+		let seconds = (queue.totalTime / 1000) % 60
+        let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr `}${minutes} min ${seconds < 10 ? '0' : ''}${seconds} sec`;
+        
+        queue.metadata.send(`🎶 | Added **${tracks.length}** tracks to the queue. **${queue.tracks.length} songs,${totalTime}**`).catch(()=>{ });
     });
 
     /*
@@ -46,9 +49,9 @@ module.exports.registerPlayerEvents = (player) => {
     player.on("queueEnd", (queue) => {
         queue.metadata.send("✅ | Queue finished!").catch(()=>{ });
         setTimeout(() => {
-            if (queue.connection) {
+            if (queue.connection && !queue.playing) {
                 queue.connection.disconnect();
             }
-          }, 60000)
+          }, 90000)
     });
 };

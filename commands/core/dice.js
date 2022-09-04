@@ -7,6 +7,8 @@ module.exports = {
         .setDescription("Roll dice")
         .addIntegerOption(option => option.setName("number").setDescription("The amount of dice to roll")),
     async execute(interaction) {
+        await interaction.deferReply();
+
         let number = interaction.options.getInteger("number")
         if (number == null) number = 6;
         if (number < 2) number = 2;
@@ -19,7 +21,6 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
 
-        await interaction.reply({ embeds: [embedModal] })
-        
+        await interaction.editReply({ embeds: [embedModal] });
     }
 }

@@ -6,10 +6,10 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Get ping of the bot'),
 	async execute(interaction) {
-		//await interaction.reply("My ping is \`" + interaction.client.ws.ping + " ms\`");
+		await interaction.deferReply();
 
 		try {
-			const mesg = await interaction.reply({ content: "🏓 Pong!", fetchReply: true });
+			const mesg = await interaction.editReply({ content: "🏓 Pong!", fetchReply: true });
 	  
 			let embedModal = new EmbedBuilder()
             	.setDescription(`❗️ **Bot Latency** : \`${mesg.createdTimestamp - interaction.createdTimestamp}ms\`\n\n❗️ **Websocket Latency** : \`${interaction.client.ws.ping}ms\`\n`)
