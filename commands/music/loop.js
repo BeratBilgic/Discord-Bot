@@ -16,11 +16,15 @@ module.exports = {
             return await interaction.editReply({ content: "❌ | You must have the DJ role"});
         }
 
-        if (!interaction.member.voice.channel || interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
+        if (!interaction.member.voice.channel) {
+            return await interaction.editReply("❌ | You must be in a voice channel.")
+        }
+
+        if (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId) {
             return await interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        if (queue.repeatMode != QueueRepeatMode.OFF) {
+        if (queue.repeatMode == QueueRepeatMode.TRACK) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
             return await interaction.editReply({ content: success ? `✅ | Loop mode disabled` : '❌ | Could not update loop mode' });
         }
