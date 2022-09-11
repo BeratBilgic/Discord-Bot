@@ -1,8 +1,7 @@
-const { QueueRepeatMode } = require('discord-player');
-
 module.exports = {
-    name: 'skip',
-    aliases: ['s','skip'],
+    name: 'stop',
+    category: "music",
+    aliases: ['leave'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 
@@ -20,17 +19,8 @@ module.exports = {
             return await message.channel.send({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        if (queue.repeatMode == QueueRepeatMode.TRACK) {
-            const success = queue.setRepeatMode(QueueRepeatMode.OFF);
-            if (!success) {
-                await message.channel.send({ content: '❌ | Could not update loop mode to skip current song'});
-            }
-        }
+        await queue.destroy();
 
-        const currentSong = queue.current;
-
-        const success = await queue.skip();
-
-        await message.channel.send({ content: success ? `✅ | Skipped **${currentSong}**!` : '❌ | Something went wrong!'});
+        await message.channel.send({ content: '🛑 | Stopped the music' });
     }
 }

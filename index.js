@@ -37,12 +37,16 @@ fs.readdirSync('./commands/').forEach(folder => {
     };
 });
 
-const customCommandsFiles = fs.readdirSync("./custom-commands").filter(file => file.endsWith(".js"));
-for (const file of customCommandsFiles) {
-	const command = require(`./custom-commands/${file}`);
-	client.customCommands.set(command.name, command);
-	console.log(`=> Loaded command ${file} (custom command)`);
-}
+
+fs.readdirSync('./custom-commands/').forEach(folder => {
+    const customCommandsFiles = fs.readdirSync(`./custom-commands/${folder}`).filter(file => file.endsWith('.js'));
+
+    for (const file of customCommandsFiles) {
+        const command = require(`./custom-commands/${folder}/${file}`);
+        client.customCommands.set(command.name, command);
+		console.log(`=> Loaded custom command ${file}`);
+    };
+});
 
 const eventFiles = fs.readdirSync("./events").filter(file => file.endsWith(".js"));
 for (const file of eventFiles) {

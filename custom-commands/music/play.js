@@ -3,7 +3,8 @@ const playdl = require("play-dl");
 
 module.exports = {
     name: 'play',
-    aliases: ['p','play'],
+    category: "music",
+    aliases: ['p'],
     async execute(client, message, args) {
         if (!message.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
             return await message.channel.send({ content: "❌ | You must have the DJ role"});
@@ -31,7 +32,7 @@ module.exports = {
             guild: message.guildId,
 
             //leaveOnEmpty: false,
-            leaveOnEmptyCooldown : 90000,
+            leaveOnEmptyCooldown : 120000,
             leaveOnEnd: false,
             leaveOnStop: true,
 

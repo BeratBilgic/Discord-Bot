@@ -1,31 +1,32 @@
 const { QueueRepeatMode } = require('discord-player');
 
 module.exports = {
-    name: 'loop',
-    aliases: ['lp','loop','l'],
+    name: 'loop-queue',
+    category: "music",
+    aliases: ['lpq','lq','queue-loop','repeat-queue'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 
-        if (!queue || !queue.playing) return await message.editReply({ content: '❌ | No music is being played' });
+        if (!queue || !queue.playing) return await message.channel.send({ content: '❌ | No music is being played' });
 
         if (!message.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
-            return await message.editReply({ content: "❌ | You must have the DJ role"});
+            return await message.channel.send({ content: "❌ | You must have the DJ role"});
         }
 
         if (!message.member.voice.channel) {
-            return await message.editReply("❌ | You must be in a voice channel.")
+            return await message.channel.send("❌ | You must be in a voice channel.")
         }
 
         if (message.guild.members.me.voice.channelId && message.member.voice.channelId !== message.guild.members.me.voice.channelId) {
-            return await message.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
+            return await message.channel.send({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        if (queue.repeatMode == QueueRepeatMode.TRACK) {
+        if (queue.repeatMode == QueueRepeatMode.QUEUE) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
             return await message.channel.send({ content: success ? `✅ | Loop mode disabled` : '❌ | Could not update loop mode' });
         }
 
-        const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
+        const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
         await message.channel.send({ content: success ? `✅ | Loop mode enabled` : '❌ | Could not update loop mode' });
     }
