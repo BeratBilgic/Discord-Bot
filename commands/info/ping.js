@@ -16,9 +16,9 @@ module.exports = {
 				.setTimestamp()
 				.setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
 			await interaction.editReply({ embeds: [embedModal] });
-		  } catch (err) {
+		} catch (err) {
 			await interaction.editReply("❌ | Something Went Wrong");
 			console.error(err);
-		  }
+		}
 	},
 };

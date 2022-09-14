@@ -5,9 +5,18 @@ module.exports.registerPlayerEvents = (player) => {
 
     player.on("error", (queue, error) => {
         console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
+        queue.destroy();
+        queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
     });
+
     player.on("connectionError", (queue, error) => {
         console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
+        queue.destroy();
+        if (error.code === 'ABORT_ERR') {
+            queue.metadata.send("❌ | Could not join your voice channel!").catch(()=>{ });
+        }else{
+            queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
+        }
     });
 
     player.on("trackStart", (queue, track) => {
@@ -36,11 +45,9 @@ module.exports.registerPlayerEvents = (player) => {
         queue.metadata.send(`🎶 | Added **${tracks.length}** tracks to the queue. **${queue.tracks.length} songs,${totalTime}**`).catch(()=>{ });
     });
 
-    /*
     player.on("botDisconnect", (queue) => {
-        queue.metadata.send("❌ | I was manually disconnected from the voice channel, clearing queue!").catch(()=>{ });
+        queue.metadata.send("❌ | I was left from the voice channel, clearing queue!").catch(()=>{ });
     });
-    */
 
     player.on("channelEmpty", (queue) => {
         queue.metadata.send("❌ | Nobody is in the voice channel, leaving...").catch(()=>{ });
@@ -52,6 +59,6 @@ module.exports.registerPlayerEvents = (player) => {
             if (queue.connection && !queue.playing) {
                 queue.connection.disconnect();
             }
-          }, 90000)
+          }, 120000)
     });
 };

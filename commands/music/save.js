@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 const iconLink = "https://imgur.com/jHeZrtv.png";
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName("save")
         .setDescription("It sends and saves the current music to you via DM box"),

@@ -2,7 +2,7 @@ module.exports = {
 	name: "messageCreate",
 	async execute(message) {
         const client = message.client;
-        const prefix = ",";
+        const prefix = "-";
 
 		if (message.author.bot || !message.guild) return;
 

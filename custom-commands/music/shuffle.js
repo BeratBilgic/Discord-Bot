@@ -1,11 +1,11 @@
 module.exports = {
-    name: 'clear',
+    name: 'shuffle',
     category: "music",
-    aliases: ['c'],
+    aliases: ['shuffle'],
     async execute(client, message, args) {
-        const queue = await message.client.player.getQueue(message.guildId);
+        const queue = await client.player.getQueue(message.guildId);
 
-        if (!queue) return await message.channel.send({ content: '❌ | No music is being played' });
+        if (!queue || !queue.playing) return await message.channel.send({ content: '❌ | No music is being played' });
 
         if (!message.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
             return await message.channel.send({ content: "❌ | You must have the DJ role"});
@@ -19,8 +19,7 @@ module.exports = {
             return await message.channel.send({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        await queue.clear();
-
-        await message.channel.send({ content: '✅ | Queue cleared.' });
+        await queue.shuffle();
+        await message.channel.send({ content: '🔀 | Queue has been shuffled!' });
     }
 }

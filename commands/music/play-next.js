@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { QueryType } = require("discord-player");
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName('play-next')
         .setDescription('Add a song to the top of the queue')

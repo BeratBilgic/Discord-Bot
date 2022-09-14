@@ -3,6 +3,7 @@ const { QueryType } = require("discord-player");
 const playdl = require("play-dl");
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName('play')
         .setDescription('Play a song')
@@ -37,7 +38,7 @@ module.exports = {
             guild: interaction.guildId,
 
             //leaveOnEmpty: false,
-            leaveOnEmptyCooldown : 90000,
+            leaveOnEmptyCooldown : 120000,
             leaveOnEnd: false,
             leaveOnStop: true,
 

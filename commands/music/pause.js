@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName("pause")
         .setDescription("Resume the current song"),

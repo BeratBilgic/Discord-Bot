@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName("resume")
         .setDescription("Pause the current song"),
@@ -24,6 +25,6 @@ module.exports = {
         }
 
         const paused = queue.setPaused(false);
-        return await interaction.editReply({ content: paused ? '▶ | Resumed' : '❌ | Something went wrong!' });
+        await interaction.editReply({ content: paused ? '▶ | Resumed' : '❌ | Something went wrong!' });
     }
 }

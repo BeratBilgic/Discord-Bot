@@ -14,7 +14,7 @@ module.exports = {
 
         let embedModal = new EmbedBuilder()
             .setAuthor({ name: 'Help Command', iconURL: iconLink})
-            .setDescription('**NOTE: You must have a role named DJ to use music commands.**\n\n')
+            .setDescription('Usage: `-<command name>` or `/<command name>`\n**NOTE: You must have a role named DJ to use music commands.**\n')
             .addFields({ name : 'Info Commands', value: `${infoCommands}`})
             .addFields({ name : 'Music Commands', value: `${musicCommands}`})
             .addFields({ name : 'Other Commands', value: `${otherCommands}`})

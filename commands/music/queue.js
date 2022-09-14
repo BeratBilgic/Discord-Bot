@@ -3,6 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 const iconLink = "https://imgur.com/jHeZrtv.png";
 
 module.exports = {
+    category: "music",
     data: new SlashCommandBuilder()
         .setName("queue")
         .setDescription("See the queue")
@@ -12,7 +13,7 @@ module.exports = {
 
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
-        if (!queue || !queue.playing) return await interaction.editReply({ content: '❌ | No music is being played' });
+        if (!queue) return await interaction.editReply({ content: '❌ | No music is being played' });
 
         if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
             return await interaction.editReply({ content: "❌ | You must have the DJ role"});

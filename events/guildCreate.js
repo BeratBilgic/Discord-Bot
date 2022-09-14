@@ -1,4 +1,4 @@
-const { registerCommands } = require('../utils/registerAppCommands');
+const { registerCommands } = require('../utils/registerAppCommands.js');
 const { EmbedBuilder } = require("discord.js");
 const iconLink = "https://imgur.com/jHeZrtv.png";
 const inviteLink = "https://discord.com/api/oauth2/authorize?client_id=1010196507359727617&permissions=8&scope=bot%20applications.commands";

@@ -4,8 +4,8 @@ const { QueueRepeatMode } = require('discord-player');
 module.exports = {
     category: "music",
     data: new SlashCommandBuilder()
-        .setName("loop")
-        .setDescription("Toggles the loop mode"),
+        .setName("autoplay")
+        .setDescription("Toggles the auto play mode; auto adds new songs if queue empty"),
     async execute(interaction) {
         await interaction.deferReply();
 
@@ -25,13 +25,13 @@ module.exports = {
             return await interaction.editReply({ content: '❌ | You are not in the same voice channel as the bot' });
         }
 
-        if (queue.repeatMode == QueueRepeatMode.TRACK) {
+        if (queue.repeatMode == QueueRepeatMode.AUTOPLAY) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
-            return await interaction.editReply({ content: success ? `✅ | Loop mode disabled` : '❌ | Could not update loop mode' });
+            return await interaction.editReply({ content: success ? `✅ | Auto play mode disabled` : '❌ | Could not update loop mode' });
         }
 
-        const success = queue.setRepeatMode(QueueRepeatMode.TRACK);
+        const success = queue.setRepeatMode(QueueRepeatMode.AUTOPLAY);
 
-        await interaction.editReply({ content: success ? `✅ | Loop mode enabled` : '❌ | Could not update loop mode' });
+        await interaction.editReply({ content: success ? `✅ | Auto play mode enabled` : '❌ | Could not update loop mode' });
     }
 }

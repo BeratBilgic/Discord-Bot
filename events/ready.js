@@ -1,4 +1,4 @@
-const { registerCommands } = require('../utils/registerAppCommands');
+const { registerCommands } = require('../utils/registerAppCommands.js');
 
 module.exports = {
 	name: "ready",

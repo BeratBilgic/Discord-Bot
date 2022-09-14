@@ -1,7 +1,7 @@
 const { token } = require('./config.json');
 const fs = require("fs");
 const { Player } = require("discord-player");
-const { registerPlayerEvents } = require('./utils/playerEvents');
+const { registerPlayerEvents } = require('./utils/playerEvents.js');
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 
 const client = new Client({ 
