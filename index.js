@@ -8,14 +8,20 @@ const client = new Client({
 	intents: [		
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.GuildIntegrations,
+		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageTyping,
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.DirectMessageTyping,
+		GatewayIntentBits.GuildPresences,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildWebhooks,
 	],
 });
 
+client.buttons = new Collection();
 client.customCommands = new Collection();
-
 client.commands = new Collection();
 
 client.player = new Player(client, {
@@ -27,16 +33,25 @@ client.player = new Player(client, {
 
 registerPlayerEvents(client.player);
 
+fs.readdirSync('./buttons/').forEach(folder => {
+    const buttons = fs.readdirSync(`./buttons/${folder}`).filter(file => file.endsWith('.js'));
+
+    for (const file of buttons) {
+        const button = require(`./buttons/${folder}/${file}`);
+        client.buttons.set(button.name, button);
+		//console.log(`-> Loaded button ${file}`);
+    };
+});
+
 fs.readdirSync('./commands/').forEach(folder => {
     const commands = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
 
     for (const file of commands) {
         const command = require(`./commands/${folder}/${file}`);
         client.commands.set(command.data.name, command);
-		console.log(`-> Loaded command ${file}`);
+		//console.log(`-> Loaded command ${file}`);
     };
 });
-
 
 fs.readdirSync('./custom-commands/').forEach(folder => {
     const customCommandsFiles = fs.readdirSync(`./custom-commands/${folder}`).filter(file => file.endsWith('.js'));
@@ -44,7 +59,7 @@ fs.readdirSync('./custom-commands/').forEach(folder => {
     for (const file of customCommandsFiles) {
         const command = require(`./custom-commands/${folder}/${file}`);
         client.customCommands.set(command.name, command);
-		console.log(`=> Loaded custom command ${file}`);
+		//console.log(`=> Loaded custom command ${file}`);
     };
 });
 

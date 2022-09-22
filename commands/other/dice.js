@@ -1,27 +1,52 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 module.exports = {
     category: "other",
     data: new SlashCommandBuilder()
         .setName("dice")
-        .setDescription("Roll dice")
-        .addIntegerOption(option => option.setName("number").setDescription("The amount of dice to roll")),
+        .setDescription("Roll the dice"),
     async execute(interaction) {
-        await interaction.deferReply();
-
-        let number = interaction.options.getInteger("number")
-        if (number == null) number = 6;
-        if (number < 2) number = 2;
-        
-        let randomNumber = 1 + Math.floor(Math.random() * number)
-
         let embedModal = new EmbedBuilder()
-            .setTitle('Dice rolled between 1 and ' + number)
-            .setDescription('Number : ' + randomNumber)
-            .setTimestamp()
-            .setFooter({ text: 'MadBot', iconURL: 'https://imgur.com/jHeZrtv.png'});
+            .setDescription('Click a button to roll the dice')
 
-        await interaction.editReply({ embeds: [embedModal] });
+        const row1 = new ActionRowBuilder()
+		    .addComponents(
+                new ButtonBuilder()
+	                .setCustomId('dice4')
+                	.setLabel('4')
+	                .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+	                .setCustomId('dice6')
+                	.setLabel('6')
+	                .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+	                .setCustomId('dice8')
+                	.setLabel('8')
+                    .setStyle(ButtonStyle.Primary),
+            );
+        const row2 = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+	                .setCustomId('dice10')
+                	.setLabel('10')
+	                .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+	                .setCustomId('dice12')
+                	.setLabel('12')
+	                .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+	                .setCustomId('dice20')
+                	.setLabel('20')
+	                .setStyle(ButtonStyle.Primary),
+		    );
+
+        await interaction.editReply({ embeds: [embedModal], components: [row1, row2] });
+
+        setTimeout(async () => {
+            row1.components.map(c => c.setDisabled(true))  
+            row2.components.map(c => c.setDisabled(true))
+            interaction.editReply({ embeds: [embedModal], components: [row1, row2] });
+        }, 60000) 
     }
 }

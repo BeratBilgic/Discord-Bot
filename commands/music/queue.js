@@ -9,8 +9,6 @@ module.exports = {
         .setDescription("See the queue")
         .addIntegerOption((option) => option.setName('page').setDescription('Page number').setRequired(false).setMinValue(1)),
     async execute(interaction) {
-        await interaction.deferReply();
-
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
         if (!queue) return await interaction.editReply({ content: '❌ | No music is being played' });

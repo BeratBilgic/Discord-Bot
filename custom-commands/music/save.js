@@ -4,7 +4,7 @@ const iconLink = "https://imgur.com/jHeZrtv.png";
 module.exports = {
     name: 'save',
     category: "music",
-    aliases: ['record'],
+    aliases: ['dm'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 

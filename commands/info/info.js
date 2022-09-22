@@ -17,8 +17,6 @@ module.exports = {
             .setName('server')
             .setDescription('Info about the server')),
     async execute(interaction) {
-        await interaction.deferReply();
-
         const embedModal = new EmbedBuilder()
     
         if (interaction.options.getSubcommand() === 'user') {

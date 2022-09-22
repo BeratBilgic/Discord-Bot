@@ -3,7 +3,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
     name: 'ping',
     category: "info",
-    aliases: ['latency'],
+    aliases: ['latency','ms'],
     async execute(client, message, args) {
         try {
 			const mesg = await message.channel.send({ content: "🏓 Pong!", fetchReply: true });

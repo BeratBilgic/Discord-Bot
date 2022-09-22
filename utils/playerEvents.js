@@ -3,23 +3,23 @@ const iconLink = "https://imgur.com/jHeZrtv.png";
 
 module.exports.registerPlayerEvents = (player) => {
 
-    player.on("error", (queue, error) => {
+    player.on("error", async (queue, error) => {
         console.log(`[${queue.guild.name}] Error emitted from the queue: ${error.message}`);
-        queue.destroy();
-        queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
+        await queue.destroy();
+        await queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
     });
 
-    player.on("connectionError", (queue, error) => {
+    player.on("connectionError", async (queue, error) => {
         console.log(`[${queue.guild.name}] Error emitted from the connection: ${error.message}`);
-        queue.destroy();
+        await queue.destroy();
         if (error.code === 'ABORT_ERR') {
-            queue.metadata.send("❌ | Could not join your voice channel!").catch(()=>{ });
+            await queue.metadata.send("❌ | Could not join your voice channel!").catch(()=>{ });
         }else{
-            queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
+            await queue.metadata.send("❌ | Something went wrong!").catch(()=>{ });
         }
     });
 
-    player.on("trackStart", (queue, track) => {
+    player.on("trackStart", async (queue, track) => {
         let embedModal = new EmbedBuilder()
             .setTitle(track.author)
             .setDescription(`**[${track.title}](${track.url})**`)
@@ -29,36 +29,36 @@ module.exports.registerPlayerEvents = (player) => {
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: iconLink});
 
-        queue.metadata.send({ embeds: [embedModal] }).catch(()=>{ });
+        await queue.metadata.send({ embeds: [embedModal] }).catch(()=>{ });
     });
 
-    player.on("trackAdd", (queue, track) => {
-        queue.metadata.send(`🎶 | Track **${track.title}** queued!`).catch(()=>{ });
+    player.on("trackAdd", async (queue, track) => {
+        await queue.metadata.send(`🎶 | Track **${track.title}** queued!`).catch(()=>{ });
     });
 
-    player.on("tracksAdd", (queue, tracks) => {
+    player.on("tracksAdd", async (queue, tracks) => {
         let hour = Math.floor(queue.totalTime / 1000 / 60 / 60)
         let minutes = Math.floor(queue.totalTime / 1000 / 60 % 60)
 		let seconds = (queue.totalTime / 1000) % 60
         let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr `}${minutes} min ${seconds < 10 ? '0' : ''}${seconds} sec`;
         
-        queue.metadata.send(`🎶 | Added **${tracks.length}** tracks to the queue. **${queue.tracks.length} songs,${totalTime}**`).catch(()=>{ });
+        await queue.metadata.send(`🎶 | Added **${tracks.length}** tracks to the queue. **${queue.tracks.length} songs,${totalTime}**`).catch(()=>{ });
     });
 
-    player.on("botDisconnect", (queue) => {
-        queue.metadata.send("❌ | I was left from the voice channel, clearing queue!").catch(()=>{ });
+    player.on("botDisconnect", async (queue) => {
+        await queue.metadata.send("leaving...").catch(()=>{ });
     });
 
-    player.on("channelEmpty", (queue) => {
-        queue.metadata.send("❌ | Nobody is in the voice channel, leaving...").catch(()=>{ });
+    player.on("channelEmpty", async (queue) => {
+        await queue.metadata.send("❌ | Nobody is in the voice channel, leaving...").catch(()=>{ });
     });
 
-    player.on("queueEnd", (queue) => {
-        queue.metadata.send("✅ | Queue finished!").catch(()=>{ });
-        setTimeout(() => {
+    player.on("queueEnd", async (queue) => {
+        await queue.metadata.send("✅🏁 | Queue finished!").catch(()=>{ });
+        setTimeout(async () => {
             if (queue.connection && !queue.playing) {
-                queue.connection.disconnect();
+                await queue.connection.disconnect();
             }
-          }, 120000)
+        }, 120000)
     });
 };

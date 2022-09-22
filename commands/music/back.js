@@ -7,8 +7,6 @@ module.exports = {
         .setName("back")
         .setDescription("Play the previous song"),
     async execute(interaction) {
-        await interaction.deferReply();
-
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
         if (!queue || !queue.playing) return await interaction.editReply({ content: '❌ | No music is being played' });
@@ -36,6 +34,6 @@ module.exports = {
         
         await queue.back();
 
-        await interaction.editReply({ content: '✅ | Playing the previous song!' });
+        await interaction.editReply({ content: '⏪ | Playing the previous song!' });
     }
 }

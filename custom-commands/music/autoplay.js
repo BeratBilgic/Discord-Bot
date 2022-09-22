@@ -3,7 +3,7 @@ const { QueueRepeatMode } = require('discord-player');
 module.exports = {
     name: 'autoplay',
     category: "music",
-    aliases: ['auto'],
+    aliases: ['auto','ap'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 

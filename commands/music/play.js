@@ -9,8 +9,6 @@ module.exports = {
         .setDescription('Play a song')
         .addStringOption(option => option.setName("song").setDescription("The song you want to play").setRequired(true)),
     async execute(interaction) {
-        await interaction.deferReply();
-
         if (!interaction.member.roles.cache.some(role => role.name === 'DJ' || role.name === 'Dj' || role.name === 'dj')){
             return await interaction.editReply({ content: "❌ | You must have the DJ role"});
         }

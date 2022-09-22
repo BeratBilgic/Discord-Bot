@@ -1,7 +1,7 @@
 module.exports = {
     name: 'clear',
     category: "music",
-    aliases: ['c'],
+    aliases: ['c','clearqueue'],
     async execute(client, message, args) {
         const queue = await message.client.player.getQueue(message.guildId);
 

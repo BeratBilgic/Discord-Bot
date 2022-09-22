@@ -3,7 +3,7 @@ const { QueueRepeatMode } = require('discord-player');
 module.exports = {
     name: 'loop-queue',
     category: "music",
-    aliases: ['lpq','lq','queue-loop','repeat-queue'],
+    aliases: ['lpq','lq','repeatqueue','loopqueue'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 
@@ -23,11 +23,11 @@ module.exports = {
 
         if (queue.repeatMode == QueueRepeatMode.QUEUE) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
-            return await message.channel.send({ content: success ? `✅ | Loop mode disabled` : '❌ | Could not update loop mode' });
+            return await message.channel.send({ content: success ? `🔁 | Loop mode disabled` : '❌ | Could not update loop mode' });
         }
 
         const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
-        await message.channel.send({ content: success ? `✅ | Loop mode enabled` : '❌ | Could not update loop mode' });
+        await message.channel.send({ content: success ? `🔁 | Loop mode enabled` : '❌ | Could not update loop mode' });
     }
 }

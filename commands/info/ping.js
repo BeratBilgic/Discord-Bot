@@ -6,8 +6,6 @@ module.exports = {
 		.setName('ping')
 		.setDescription('Get ping of the bot'),
 	async execute(interaction) {
-		await interaction.deferReply();
-
 		try {
 			const mesg = await interaction.editReply({ content: "🏓 Pong!", fetchReply: true });
 	  

@@ -32,6 +32,6 @@ module.exports = {
         
         await queue.back();
 
-        await message.channel.send({ content: '✅ | Playing the previous song!' });
+        await message.channel.send({ content: '⏪ | Playing the previous song!' });
     }
 }

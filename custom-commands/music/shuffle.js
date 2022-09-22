@@ -1,7 +1,7 @@
 module.exports = {
     name: 'shuffle',
     category: "music",
-    aliases: ['shuffle'],
+    aliases: ['mix'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 

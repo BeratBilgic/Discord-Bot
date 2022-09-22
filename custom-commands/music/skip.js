@@ -3,7 +3,7 @@ const { QueueRepeatMode } = require('discord-player');
 module.exports = {
     name: 'skip',
     category: "music",
-    aliases: ['s'],
+    aliases: ['s','next'],
     async execute(client, message, args) {
         const queue = await client.player.getQueue(message.guildId);
 
@@ -32,6 +32,6 @@ module.exports = {
 
         const success = await queue.skip();
 
-        await message.channel.send({ content: success ? `✅ | Skipped **${currentSong}**!` : '❌ | Something went wrong!'});
+        await message.channel.send({ content: success ? `⏩ | Skipped **${currentSong}**!` : '❌ | Something went wrong!'});
     }
 }

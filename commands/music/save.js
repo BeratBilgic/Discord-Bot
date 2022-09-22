@@ -7,9 +7,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("save")
         .setDescription("It sends and saves the current music to you via DM box"),
-    async execute(interaction) {
-        await interaction.deferReply();
-        
+    async execute(interaction) {        
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
         if (!queue || !queue.playing) return await interaction.editReply({ content: '❌ | No music is being played' });

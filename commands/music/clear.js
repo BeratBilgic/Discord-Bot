@@ -5,9 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("clear")
         .setDescription("Clear the current queue"),
-    async execute(interaction) {
-        await interaction.deferReply();
-        
+    async execute(interaction) {        
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
         if (!queue) return await interaction.editReply({ content: '❌ | No music is being played' });

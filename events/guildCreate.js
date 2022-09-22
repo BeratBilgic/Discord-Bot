@@ -13,8 +13,8 @@ module.exports = {
 
 		let embedModal = new EmbedBuilder()
             .setAuthor({ name: 'MadBot', iconURL: iconLink})
-			.setDescription('Thank you for inviting MadBot!\n\nTo get started, join a voice channel and `/play` a song.'
-						+ '\n To get a list of all commands type `/help`\n\nYou can also write me anything about MadBot - MadHero#7366\n')
+			.setDescription('Thank you for inviting MadBot!\n\nTo get started, join a voice channel and `/play` or `-play` a song.\nYou must have a role named DJ to use music commands.\n'
+						+ '\n To get a list of all commands type `/help` or `-help`\n\nYou can also write me anything about MadBot - MadHero#7366\n')
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: iconLink});
 

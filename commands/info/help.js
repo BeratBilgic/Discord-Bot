@@ -8,9 +8,26 @@ module.exports = {
     category: "info",
     data: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("Show bot commands"),
+        .setDescription("Show bot commands")
+        .addStringOption(option => option.setName('command').setDescription('The user')),
     async execute(interaction) {
-        await interaction.deferReply();
+        let commandName = await interaction.options.getString('command');
+
+        if (commandName != null) {
+            const command = interaction.client.commands.get(commandName);
+            if (!command) return await interaction.editReply("❌ | Command not found");
+
+            const customCommand = interaction.client.customCommands.get(commandName);
+            const aliases = customCommand.aliases.map((c) => '`' + c + '`').join(', ');
+
+            let embedModal = new EmbedBuilder()
+                .setAuthor({ name: `${command.data.name}`, iconURL: iconLink})
+                .addFields({ name : 'Description', value: `${command.data.description}`})
+                .addFields({ name : 'Aliases', value: `${aliases}`})
+                .addFields({ name : 'Permission', value: command.category == 'music' ? '@DJ' : '@everyone'})
+
+            return await interaction.editReply({ embeds: [embedModal] })
+        }
 
         const infoCommands = interaction.client.commands.filter((c) => c.category == 'info').map((c) => '`' + c.data.name + '`').join(', ');
         const musicCommands = interaction.client.commands.filter((c) => c.category == 'music').map((c) => '`' + c.data.name + '`').join(', ');
@@ -18,7 +35,7 @@ module.exports = {
 
         let embedModal = new EmbedBuilder()
             .setAuthor({ name: 'Help Command', iconURL: iconLink})
-            .setDescription('Usage: `-<command name>` or `/<command name>`\n**NOTE: You must have a role named DJ to use music commands.**\n')
+            .setDescription("Usage: `-<command name>` or `/<command name>`\nType `/help <CommandName>` for details on a command\n**NOTE: You must have a role named DJ to use music commands.**\n")
             .addFields({ name : 'Info Commands', value: `${infoCommands}`})
             .addFields({ name : 'Music Commands', value: `${musicCommands}`})
             .addFields({ name : 'Other Commands', value: `${otherCommands}`})

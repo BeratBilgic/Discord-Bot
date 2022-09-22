@@ -6,7 +6,7 @@ const iconLink = "https://imgur.com/jHeZrtv.png";
 module.exports = {
     name: 'help',
     category: "info",
-    aliases: ['h'],
+    aliases: ['h','support'],
     async execute(client, message, args) {
         const infoCommands = message.client.customCommands.filter((c) => c.category == 'info').map((c) => '`' + c.name + '`').join(', ');
         const musicCommands = message.client.customCommands.filter((c) => c.category == 'music').map((c) => '`' + c.name + '`').join(', ');
