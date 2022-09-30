@@ -19,9 +19,14 @@ module.exports = {
             await command.execute(client, message, args);
         }
         catch (err) {
-            await message.channel.send("🛠 | An error occurred while executing that command.");
+            await message.channel.send("🛠 | An error occurred while executing that command.").catch(()=>{ });
 
             if (err) console.error(err);
+
+            if (err.code == 50013) {	
+				const author = await message.author;
+				author.send(`I don't have permission to send message to ${message.channel} channel on **${message.guild}** server`).catch(() => { })
+			}
         }
 	}
 }

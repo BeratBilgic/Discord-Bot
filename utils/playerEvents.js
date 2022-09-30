@@ -50,11 +50,11 @@ module.exports.registerPlayerEvents = (player) => {
     });
 
     player.on("channelEmpty", async (queue) => {
-        await queue.metadata.send("❌ | Nobody is in the voice channel, leaving...").catch(()=>{ });
+        await queue.metadata.send("Nobody is in the voice channel, leaving...").catch(()=>{ });
     });
 
     player.on("queueEnd", async (queue) => {
-        await queue.metadata.send("✅🏁 | Queue finished!").catch(()=>{ });
+        await queue.metadata.send("✅ | Queue finished!").catch(()=>{ });
         setTimeout(async () => {
             if (queue.connection && !queue.playing) {
                 await queue.connection.disconnect();

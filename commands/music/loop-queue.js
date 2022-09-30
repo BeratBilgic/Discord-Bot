@@ -25,11 +25,11 @@ module.exports = {
 
         if (queue.repeatMode == QueueRepeatMode.QUEUE) {
             const success = queue.setRepeatMode(QueueRepeatMode.OFF);
-            return await interaction.editReply({ content: success ? `🔁 | Loop mode disabled` : '❌ | Could not update loop mode' });
+            return await interaction.editReply({ content: success ? `🔁 | Loop mode disabled for queue` : '❌ | Could not update loop mode' });
         }
 
         const success = queue.setRepeatMode(QueueRepeatMode.QUEUE);
 
-        await interaction.editReply({ content: success ? `🔁 | Loop mode enabled` : '❌ | Could not update loop mode' });
+        await interaction.editReply({ content: success ? `🔁 | Loop mode enabled for queue` : '❌ | Could not update loop mode' });
     }
 }

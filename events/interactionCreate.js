@@ -30,7 +30,7 @@ module.exports = {
 			await interaction.editReply({
 				content: "🛠 | An error occurred while executing that command.",
 				ephemeral: true,
-			});
+			}).catch(()=>{ });
 
 			if (err) console.error(err);
 		}

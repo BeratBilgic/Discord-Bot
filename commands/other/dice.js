@@ -47,6 +47,6 @@ module.exports = {
             row1.components.map(c => c.setDisabled(true))  
             row2.components.map(c => c.setDisabled(true))
             interaction.editReply({ embeds: [embedModal], components: [row1, row2] });
-        }, 60000) 
+        }, 120000) 
     }
 }
