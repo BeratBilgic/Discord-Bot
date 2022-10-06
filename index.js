@@ -1,5 +1,6 @@
-const { token } = require('./config.json');
+const { token, database } = require('./config.json');
 const fs = require("fs");
+const mongoose = require('mongoose');
 const { Player } = require("discord-player");
 const { registerPlayerEvents } = require('./utils/playerEvents.js');
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
@@ -72,5 +73,12 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+mongoose.connect(database
+).then(() => {
+	console.log('Connected to MongoDB')
+}).catch((err) => {
+	console.log(err)
+})
 
 client.login(token);

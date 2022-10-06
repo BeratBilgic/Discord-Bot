@@ -38,7 +38,7 @@ module.exports = {
         let hour = Math.floor(queue.totalTime / 1000 / 60 / 60)
         let minutes = Math.floor(queue.totalTime / 1000 / 60 % 60)
 		let seconds = (queue.totalTime / 1000) % 60
-        let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr `}${minutes} min ${seconds < 10 ? '0' : ''}${seconds} sec`;
+        let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr`}${minutes < 1 ? ' ' : ` ${minutes} min`}${seconds < 10 ? ' ' : ` ${seconds} sec`}`;
 
         let currentSong = queue.current
 

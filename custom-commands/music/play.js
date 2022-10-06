@@ -32,7 +32,7 @@ module.exports = {
             guild: message.guildId,
 
             //leaveOnEmpty: false,
-            leaveOnEmptyCooldown : 120000,
+            leaveOnEmptyCooldown : 300000,
             leaveOnEnd: false,
             leaveOnStop: true,
 

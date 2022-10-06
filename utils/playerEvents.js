@@ -1,4 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
+const { countTrackViews } = require("../database/mongoose.js");
 const iconLink = "https://imgur.com/jHeZrtv.png";
 
 module.exports.registerPlayerEvents = (player) => {
@@ -30,6 +31,8 @@ module.exports.registerPlayerEvents = (player) => {
             .setFooter({ text: 'MadBot', iconURL: iconLink});
 
         await queue.metadata.send({ embeds: [embedModal] }).catch(()=>{ });
+
+        await countTrackViews(track);
     });
 
     player.on("trackAdd", async (queue, track) => {
@@ -40,7 +43,7 @@ module.exports.registerPlayerEvents = (player) => {
         let hour = Math.floor(queue.totalTime / 1000 / 60 / 60)
         let minutes = Math.floor(queue.totalTime / 1000 / 60 % 60)
 		let seconds = (queue.totalTime / 1000) % 60
-        let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr `}${minutes} min ${seconds < 10 ? '0' : ''}${seconds} sec`;
+        let totalTime = `${hour < 1 ? ' ' : ` ${hour} hr`}${minutes < 1 ? ' ' : ` ${minutes} min`}${seconds < 10 ? ' ' : ` ${seconds} sec`}`;
         
         await queue.metadata.send(`🎶 | Added **${tracks.length}** tracks to the queue. **${queue.tracks.length} songs,${totalTime}**`).catch(()=>{ });
     });
@@ -59,6 +62,6 @@ module.exports.registerPlayerEvents = (player) => {
             if (queue.connection && !queue.playing) {
                 await queue.connection.disconnect();
             }
-        }, 120000)
+        }, 300000)
     });
 };

@@ -10,9 +10,9 @@ module.exports = {
 		client.guilds.cache.forEach(async guild => {
             const commands = (await guild.commands.fetch().catch(() => { })) || client.commands.size
 
-            registerCommands(client, guild);
+            await registerCommands(client, guild);
             if (commands.size != client.commands.size) {
-                registerCommands(client, guild);
+                await registerCommands(client, guild);
             }
         });
 	},
