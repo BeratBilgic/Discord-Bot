@@ -1,4 +1,6 @@
 config.json
+.env
+youtube.data
 
 ## OS X
 .DS_Store
