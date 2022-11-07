@@ -32,7 +32,7 @@ module.exports.registerPlayerEvents = (player) => {
 
         await queue.metadata.send({ embeds: [embedModal] }).catch(()=>{ });
 
-        await countTrackViews(track);
+        await countTrackViews(track).catch((err) => {console.log(err)});
     });
 
     player.on("trackAdd", async (queue, track) => {

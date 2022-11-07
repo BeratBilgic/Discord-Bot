@@ -1,0 +1,5 @@
+{
+	"token": "your token",
+	"prefix": "your prefix",
+	"database": "your connection string for mongodb"
+}

@@ -1,4 +1,4 @@
-const { token, database } = require('./config.json');
+const { token, database, prefix } = require('./config.json');
 const fs = require("fs");
 const mongoose = require('mongoose');
 const { Player } = require("discord-player");
@@ -20,6 +20,8 @@ const client = new Client({
 		GatewayIntentBits.GuildWebhooks,
 	],
 });
+
+client.prefix = prefix;
 
 client.buttons = new Collection();
 client.customCommands = new Collection();

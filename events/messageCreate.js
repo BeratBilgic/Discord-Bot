@@ -1,14 +1,13 @@
 module.exports = {
 	name: "messageCreate",
 	async execute(message) {
-        const client = message.client;
-        const prefix = "-";
+        const client = message.client;  
 
 		if (message.author.bot || !message.guild) return;
 
-	    if (!message.content.startsWith(prefix)) return;
+	    if (!message.content.startsWith(client.prefix)) return;
 
-	    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+	    const args = message.content.slice(client.prefix.length).trim().split(/ +/g);
         const cmd = args.shift().toLowerCase();
 
         const command = client.customCommands.get(cmd) || client.customCommands.find(command => command.aliases && command.aliases.includes(cmd));
