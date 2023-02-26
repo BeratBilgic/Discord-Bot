@@ -2,7 +2,7 @@ const { token, database, prefix } = require('./config.json');
 const fs = require("fs");
 const mongoose = require('mongoose');
 const { Player } = require("discord-player");
-const { registerPlayerEvents } = require('./utils/playerEvents.js');
+const { registerPlayerEvents } = require('./events/playerEvents.js');
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 
 const client = new Client({ 
@@ -76,6 +76,7 @@ for (const file of eventFiles) {
 	}
 }
 
+mongoose.set("strictQuery", false);
 mongoose.connect(database
 ).then(() => {
 	console.log('Connected to MongoDB')
