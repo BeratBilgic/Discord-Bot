@@ -8,7 +8,7 @@ module.exports = {
     category: "info",
     data: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("Show bot commands")
+        .setDescription("Lists all commands or just help for one command.")
         .addStringOption(option => option.setName('command').setDescription('The user')),
     async execute(interaction) {
         let commandName = await interaction.options.getString('command');
@@ -39,7 +39,8 @@ module.exports = {
             .addFields({ name : 'Info Commands', value: `${infoCommands}`})
             .addFields({ name : 'Music Commands', value: `${musicCommands}`})
             .addFields({ name : 'Other Commands', value: `${otherCommands}`})
-            .addFields({ name: 'MadBot', value: '[Source Code](' + githubLink + ')  |  [Invite MadBot](' + inviteLink + ')'})
+            //.addFields({ name: 'MadBot', value: '[Source Code](' + githubLink + ')  |  [Invite MadBot](' + inviteLink + ')'})
+            .addFields({ name: 'MadBot', value: '[Source Code](' + githubLink + ')'})
             .setThumbnail(iconLink)
             .setTimestamp()
             .setFooter({ text: 'MadBot', iconURL: iconLink});

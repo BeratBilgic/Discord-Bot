@@ -4,7 +4,7 @@ module.exports = {
     category: "music",
     data: new SlashCommandBuilder()
         .setName("pause")
-        .setDescription("Resume the current song"),
+        .setDescription("Pause the current song"),
     async execute(interaction) {
         const queue = await interaction.client.player.getQueue(interaction.guildId);
 
