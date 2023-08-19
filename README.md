@@ -3,11 +3,6 @@ MadBot is a free, open-source, extensible bot for Discord servers, built on top 
 
 </br>
 
-# Discord Server
-With this <a href="https://discord.gg/y8Qr8cSKqR">this link</a>, you can join the discord server and test the bot.
-
-</br>
-
 # Dependencies
 - [discord.js](https://discord.js.org/#/)
 - [@discordjs/opus](https://www.npmjs.com/package/@discordjs/opus)
